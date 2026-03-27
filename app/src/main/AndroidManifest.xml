@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- BLE Permissions -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+    <!-- Location Permissions -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Health Connect (read HR from Samsung Watch via Samsung Health) -->
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
+
+    <!-- Health Connect write permissions -->
+    <uses-permission android:name="android.permission.health.WRITE_EXERCISE" />
+    <uses-permission android:name="android.permission.health.WRITE_HEART_RATE" />
+    <uses-permission android:name="android.permission.health.WRITE_DISTANCE" />
+    <uses-permission android:name="android.permission.health.WRITE_TOTAL_CALORIES_BURNED" />
+    <uses-permission android:name="android.permission.health.WRITE_EXERCISE_ROUTE" />
+
+    <!-- Foreground Service -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+
+    <!-- Notifications (Android 13+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Wake Lock (keep screen on during ride) -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Internet (Strava sync, Maps) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Disable AppAuth's RedirectUriReceiverActivity to avoid conflict with our Strava callback -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+
+    <application
+        android:name=".CycleCompApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CycleComp"
+        tools:targetApi="34">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.CycleComp"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Strava OAuth callback -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="com.cyclecomp.app"
+                    android:host="strava-callback" />
+            </intent-filter>
+        </activity>
+
+        <!-- Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
+        <!-- Health Connect: tells Health Connect this app uses health data -->
+        <!-- This makes CycleComp appear in Health Connect's app permissions list -->
+        <activity-alias
+            android:name="ViewPermissionUsageActivity"
+            android:exported="true"
+            android:targetActivity=".MainActivity"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE">
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- Required for Android 14+ Health Connect integration -->
+        <activity
+            android:name="androidx.health.connect.client.impl.PermissionRationaleActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
+        </activity>
+
+        <!-- Foreground service for ride recording (keeps BLE + GPS alive) -->
+        <service
+            android:name=".domain.ride.RideRecordingService"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+
+        <!-- Disable AppAuth's RedirectUriReceiverActivity to prevent chooser dialog -->
+        <activity
+            android:name="net.openid.appauth.RedirectUriReceiverActivity"
+            android:enabled="false"
+            tools:node="merge" />
+
+        <!-- Wearable Data Layer: receives HR messages from CycleComp Watch app -->
+        <service
+            android:name=".data.wearable.WearableHrListenerService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+                <data
+                    android:scheme="wear"
+                    android:host="*"
+                    android:pathPrefix="/cyclecomp/hr" />
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>

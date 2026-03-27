@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Required for Wear OS -->
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <!-- Body sensors (heart rate) -->
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+
+    <!-- Activity recognition -->
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+
+    <!-- Location / GPS from watch -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Wake lock for continuous tracking -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_HEALTH" />
+
+    <application
+        android:allowBackup="true"
+        android:label="CycleComp Watch"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.DeviceDefault">
+
+        <!-- Standalone Wear OS app (does not require phone app to install) -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+
+        <activity
+            android:name="com.cyclecomp.wear.MainActivity"
+            android:exported="true"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- WearableListenerService to receive commands from phone -->
+        <service
+            android:name="com.cyclecomp.wear.PhoneCommandListenerService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+                <data
+                    android:scheme="wear"
+                    android:host="*"
+                    android:pathPrefix="/cyclecomp/command" />
+            </intent-filter>
+        </service>
+
+        <!-- Foreground service to keep HR tracking alive -->
+        <service
+            android:name="com.cyclecomp.wear.HrTrackingService"
+            android:exported="false"
+            android:foregroundServiceType="health" />
+
+    </application>
+
+</manifest>

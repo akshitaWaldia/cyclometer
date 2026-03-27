@@ -1,0 +1,245 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.cyclecomp.app"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="30"
+9        android:targetSdkVersion="34" />
+10
+11    <!-- Required for Wear OS -->
+12    <uses-feature android:name="android.hardware.type.watch" />
+12-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:5:5-64
+12-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:5:19-61
+13
+14    <!-- Body sensors (heart rate) -->
+15    <uses-permission android:name="android.permission.BODY_SENSORS" />
+15-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:8:5-71
+15-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:8:22-68
+16
+17    <!-- Activity recognition -->
+18    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+18-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:11:5-79
+18-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:11:22-76
+19
+20    <!-- Location / GPS from watch -->
+21    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+21-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:14:5-79
+21-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:14:22-76
+22    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+22-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:15:5-81
+22-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:15:22-78
+23
+24    <!-- Wake lock for continuous tracking -->
+25    <uses-permission android:name="android.permission.WAKE_LOCK" />
+25-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:18:5-68
+25-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:18:22-65
+26    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+26-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:19:5-77
+26-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:19:22-74
+27    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_HEALTH" />
+27-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:20:5-84
+27-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:20:22-81
+28
+29    <queries>
+29-->[androidx.health:health-services-client:1.1.0-alpha03] /Users/awaldia/.gradle/caches/transforms-4/e30c753d97eb4f38336c718c1b771715/transformed/health-services-client-1.1.0-alpha03/AndroidManifest.xml:19:5-21:15
+30        <package android:name="com.google.android.wearable.healthservices" />
+30-->[androidx.health:health-services-client:1.1.0-alpha03] /Users/awaldia/.gradle/caches/transforms-4/e30c753d97eb4f38336c718c1b771715/transformed/health-services-client-1.1.0-alpha03/AndroidManifest.xml:20:9-78
+30-->[androidx.health:health-services-client:1.1.0-alpha03] /Users/awaldia/.gradle/caches/transforms-4/e30c753d97eb4f38336c718c1b771715/transformed/health-services-client-1.1.0-alpha03/AndroidManifest.xml:20:18-75
+31    </queries>
+32
+33    <permission
+33-->[androidx.core:core:1.13.1] /Users/awaldia/.gradle/caches/transforms-4/f24f790794c859491ae8ead4fc47d4a7/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
+34        android:name="com.cyclecomp.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+34-->[androidx.core:core:1.13.1] /Users/awaldia/.gradle/caches/transforms-4/f24f790794c859491ae8ead4fc47d4a7/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
+35        android:protectionLevel="signature" />
+35-->[androidx.core:core:1.13.1] /Users/awaldia/.gradle/caches/transforms-4/f24f790794c859491ae8ead4fc47d4a7/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
+36
+37    <uses-permission android:name="com.cyclecomp.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+37-->[androidx.core:core:1.13.1] /Users/awaldia/.gradle/caches/transforms-4/f24f790794c859491ae8ead4fc47d4a7/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
+37-->[androidx.core:core:1.13.1] /Users/awaldia/.gradle/caches/transforms-4/f24f790794c859491ae8ead4fc47d4a7/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
+38
+39    <application
+39-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:22:5-62:19
+40        android:allowBackup="true"
+40-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:23:9-35
+41        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+41-->[androidx.core:core:1.13.1] /Users/awaldia/.gradle/caches/transforms-4/f24f790794c859491ae8ead4fc47d4a7/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
+42        android:debuggable="true"
+43        android:extractNativeLibs="false"
+44        android:label="CycleComp Watch"
+44-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:24:9-40
+45        android:supportsRtl="true"
+45-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:25:9-35
+46        android:theme="@android:style/Theme.DeviceDefault" >
+46-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:26:9-59
+47
+48        <!-- Standalone Wear OS app (does not require phone app to install) -->
+49        <meta-data
+49-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:29:9-31:36
+50            android:name="com.google.android.wearable.standalone"
+50-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:30:13-66
+51            android:value="true" />
+51-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:31:13-33
+52
+53        <activity
+53-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:33:9-41:20
+54            android:name="com.cyclecomp.wear.MainActivity"
+54-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:34:13-59
+55            android:exported="true"
+55-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:35:13-36
+56            android:taskAffinity="" >
+56-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:36:13-36
+57            <intent-filter>
+57-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:37:13-40:29
+58                <action android:name="android.intent.action.MAIN" />
+58-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:38:17-69
+58-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:38:25-66
+59
+60                <category android:name="android.intent.category.LAUNCHER" />
+60-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:39:17-77
+60-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:39:27-74
+61            </intent-filter>
+62        </activity>
+63
+64        <!-- WearableListenerService to receive commands from phone -->
+65        <service
+65-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:44:9-54:19
+66            android:name="com.cyclecomp.wear.PhoneCommandListenerService"
+66-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:45:13-74
+67            android:exported="true" >
+67-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:46:13-36
+68            <intent-filter>
+68-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:47:13-53:29
+69                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+69-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:48:17-91
+69-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:48:25-88
+70
+71                <data
+71-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:49:17-52:63
+72                    android:host="*"
+72-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:51:21-37
+73                    android:pathPrefix="/cyclecomp/command"
+73-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:52:21-60
+74                    android:scheme="wear" />
+74-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:50:21-42
+75            </intent-filter>
+76        </service>
+77
+78        <!-- Foreground service to keep HR tracking alive -->
+79        <service
+79-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:57:9-60:54
+80            android:name="com.cyclecomp.wear.HrTrackingService"
+80-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:58:13-64
+81            android:exported="false"
+81-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:59:13-37
+82            android:foregroundServiceType="health" />
+82-->/Volumes/workplace/cyclometr/wear/src/main/AndroidManifest.xml:60:13-51
+83
+84        <activity
+84-->[com.google.android.gms:play-services-base:18.5.0] /Users/awaldia/.gradle/caches/transforms-4/868c77ba06cd3d7c661d1afc04c9389a/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:9-173
+85            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+85-->[com.google.android.gms:play-services-base:18.5.0] /Users/awaldia/.gradle/caches/transforms-4/868c77ba06cd3d7c661d1afc04c9389a/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:19-85
+86            android:exported="false"
+86-->[com.google.android.gms:play-services-base:18.5.0] /Users/awaldia/.gradle/caches/transforms-4/868c77ba06cd3d7c661d1afc04c9389a/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:146-170
+87            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+87-->[com.google.android.gms:play-services-base:18.5.0] /Users/awaldia/.gradle/caches/transforms-4/868c77ba06cd3d7c661d1afc04c9389a/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:86-145
+88        <activity
+88-->[androidx.compose.ui:ui-tooling-android:1.6.8] /Users/awaldia/.gradle/caches/transforms-4/76e6f5ca6d63b106c437d729d6393072/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
+89            android:name="androidx.compose.ui.tooling.PreviewActivity"
+89-->[androidx.compose.ui:ui-tooling-android:1.6.8] /Users/awaldia/.gradle/caches/transforms-4/76e6f5ca6d63b106c437d729d6393072/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
+90            android:exported="true" />
+90-->[androidx.compose.ui:ui-tooling-android:1.6.8] /Users/awaldia/.gradle/caches/transforms-4/76e6f5ca6d63b106c437d729d6393072/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
+91
+92        <service
+92-->[androidx.health:health-services-client:1.1.0-alpha03] /Users/awaldia/.gradle/caches/transforms-4/e30c753d97eb4f38336c718c1b771715/transformed/health-services-client-1.1.0-alpha03/AndroidManifest.xml:24:9-31:19
+93            android:name="androidx.health.services.client.VersionApiService"
+93-->[androidx.health:health-services-client:1.1.0-alpha03] /Users/awaldia/.gradle/caches/transforms-4/e30c753d97eb4f38336c718c1b771715/transformed/health-services-client-1.1.0-alpha03/AndroidManifest.xml:25:13-77
+94            android:exported="true"
+94-->[androidx.health:health-services-client:1.1.0-alpha03] /Users/awaldia/.gradle/caches/transforms-4/e30c753d97eb4f38336c718c1b771715/transformed/health-services-client-1.1.0-alpha03/AndroidManifest.xml:26:13-36
+95            android:permission="com.google.android.wearable.healthservices.permission.PASSIVE_DATA_BINDING" >
+95-->[androidx.health:health-services-client:1.1.0-alpha03] /Users/awaldia/.gradle/caches/transforms-4/e30c753d97eb4f38336c718c1b771715/transformed/health-services-client-1.1.0-alpha03/AndroidManifest.xml:27:13-108
+96            <intent-filter>
+96-->[androidx.health:health-services-client:1.1.0-alpha03] /Users/awaldia/.gradle/caches/transforms-4/e30c753d97eb4f38336c718c1b771715/transformed/health-services-client-1.1.0-alpha03/AndroidManifest.xml:28:13-30:29
+97                <action android:name="hs.versionclient.BIND" />
+97-->[androidx.health:health-services-client:1.1.0-alpha03] /Users/awaldia/.gradle/caches/transforms-4/e30c753d97eb4f38336c718c1b771715/transformed/health-services-client-1.1.0-alpha03/AndroidManifest.xml:29:17-64
+97-->[androidx.health:health-services-client:1.1.0-alpha03] /Users/awaldia/.gradle/caches/transforms-4/e30c753d97eb4f38336c718c1b771715/transformed/health-services-client-1.1.0-alpha03/AndroidManifest.xml:29:25-61
+98            </intent-filter>
+99        </service>
+100
+101        <provider
+101-->[androidx.emoji2:emoji2:1.3.0] /Users/awaldia/.gradle/caches/transforms-4/20fff399217fd607bc0787206c567b04/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+102            android:name="androidx.startup.InitializationProvider"
+102-->[androidx.emoji2:emoji2:1.3.0] /Users/awaldia/.gradle/caches/transforms-4/20fff399217fd607bc0787206c567b04/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+103            android:authorities="com.cyclecomp.app.androidx-startup"
+103-->[androidx.emoji2:emoji2:1.3.0] /Users/awaldia/.gradle/caches/transforms-4/20fff399217fd607bc0787206c567b04/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+104            android:exported="false" >
+104-->[androidx.emoji2:emoji2:1.3.0] /Users/awaldia/.gradle/caches/transforms-4/20fff399217fd607bc0787206c567b04/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+105            <meta-data
+105-->[androidx.emoji2:emoji2:1.3.0] /Users/awaldia/.gradle/caches/transforms-4/20fff399217fd607bc0787206c567b04/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+106                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+106-->[androidx.emoji2:emoji2:1.3.0] /Users/awaldia/.gradle/caches/transforms-4/20fff399217fd607bc0787206c567b04/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+107                android:value="androidx.startup" />
+107-->[androidx.emoji2:emoji2:1.3.0] /Users/awaldia/.gradle/caches/transforms-4/20fff399217fd607bc0787206c567b04/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+108            <meta-data
+108-->[androidx.lifecycle:lifecycle-process:2.8.0] /Users/awaldia/.gradle/caches/transforms-4/c97fd4f0596d6da81de1000454c568e2/transformed/lifecycle-process-2.8.0/AndroidManifest.xml:29:13-31:52
+109                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+109-->[androidx.lifecycle:lifecycle-process:2.8.0] /Users/awaldia/.gradle/caches/transforms-4/c97fd4f0596d6da81de1000454c568e2/transformed/lifecycle-process-2.8.0/AndroidManifest.xml:30:17-78
+110                android:value="androidx.startup" />
+110-->[androidx.lifecycle:lifecycle-process:2.8.0] /Users/awaldia/.gradle/caches/transforms-4/c97fd4f0596d6da81de1000454c568e2/transformed/lifecycle-process-2.8.0/AndroidManifest.xml:31:17-49
+111            <meta-data
+111-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+112                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+112-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+113                android:value="androidx.startup" />
+113-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+114        </provider>
+115
+116        <meta-data
+116-->[com.google.android.gms:play-services-basement:18.4.0] /Users/awaldia/.gradle/caches/transforms-4/cab23688cae826cb427fff2c80562862/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:9-122
+117            android:name="com.google.android.gms.version"
+117-->[com.google.android.gms:play-services-basement:18.4.0] /Users/awaldia/.gradle/caches/transforms-4/cab23688cae826cb427fff2c80562862/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:20-65
+118            android:value="@integer/google_play_services_version" />
+118-->[com.google.android.gms:play-services-basement:18.4.0] /Users/awaldia/.gradle/caches/transforms-4/cab23688cae826cb427fff2c80562862/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:66-119
+119
+120        <receiver
+120-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+121            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+121-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+122            android:directBootAware="false"
+122-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+123            android:enabled="true"
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+124            android:exported="true"
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+125            android:permission="android.permission.DUMP" >
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+126            <intent-filter>
+126-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+127                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+127-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+127-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+128            </intent-filter>
+129            <intent-filter>
+129-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+130                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+130-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+130-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+131            </intent-filter>
+132            <intent-filter>
+132-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+133                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+133-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+133-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+134            </intent-filter>
+135            <intent-filter>
+135-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+136                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+136-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+136-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/awaldia/.gradle/caches/transforms-4/647e39499b3f6ad556d0cdae2013b9fe/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+137            </intent-filter>
+138        </receiver>
+139    </application>
+140
+141</manifest>

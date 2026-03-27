@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cyclecomp.app"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="30"
+        android:targetSdkVersion="34" />
+
+    <!-- Required for Wear OS -->
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <!-- Body sensors (heart rate) -->
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+
+    <!-- Activity recognition -->
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+
+    <!-- Location / GPS from watch -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Wake lock for continuous tracking -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_HEALTH" />
+
+    <queries>
+        <package android:name="com.google.android.wearable.healthservices" />
+    </queries>
+
+    <permission
+        android:name="com.cyclecomp.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.cyclecomp.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+
+    <application
+        android:allowBackup="true"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:debuggable="true"
+        android:extractNativeLibs="false"
+        android:label="CycleComp Watch"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.DeviceDefault" >
+
+        <!-- Standalone Wear OS app (does not require phone app to install) -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+
+        <activity
+            android:name="com.cyclecomp.wear.MainActivity"
+            android:exported="true"
+            android:taskAffinity="" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- WearableListenerService to receive commands from phone -->
+        <service
+            android:name="com.cyclecomp.wear.PhoneCommandListenerService"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+
+                <data
+                    android:host="*"
+                    android:pathPrefix="/cyclecomp/command"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
+
+        <!-- Foreground service to keep HR tracking alive -->
+        <service
+            android:name="com.cyclecomp.wear.HrTrackingService"
+            android:exported="false"
+            android:foregroundServiceType="health" />
+
+        <activity
+            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="androidx.compose.ui.tooling.PreviewActivity"
+            android:exported="true" />
+
+        <service
+            android:name="androidx.health.services.client.VersionApiService"
+            android:exported="true"
+            android:permission="com.google.android.wearable.healthservices.permission.PASSIVE_DATA_BINDING" >
+            <intent-filter>
+                <action android:name="hs.versionclient.BIND" />
+            </intent-filter>
+        </service>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="com.cyclecomp.app.androidx-startup"
+            android:exported="false" >
+            <meta-data
+                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <receiver
+            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+            android:directBootAware="false"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.DUMP" >
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
