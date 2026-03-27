@@ -27,7 +27,7 @@ import com.cyclecomp.app.domain.ride.LapManager
 import com.cyclecomp.app.domain.ride.LapManagerImpl
 import com.cyclecomp.app.domain.ride.RideRecorder
 import com.cyclecomp.app.domain.ride.RideRecorderImpl
-import com.cyclecomp.app.domain.sensor.PowerEstimator
+import com.cyclecomp.app.domain.sensor.PowerEstimatorV2
 import com.cyclecomp.app.domain.sensor.SensorHub
 import com.cyclecomp.app.domain.sync.HealthConnectWriteService
 import com.cyclecomp.app.domain.sync.StravaSyncService
@@ -55,7 +55,7 @@ class DashboardViewModel @Inject constructor(
     private val gpsProvider: GpsProvider,
     private val bleManager: BleManager,
     private val wearableHrReceiver: WearableHrReceiver,
-    private val powerEstimator: PowerEstimator,
+    private val powerEstimator: PowerEstimatorV2,
     private val calorieAndTssCalculator: CalorieAndTssCalculator,
     private val rideRecorder: RideRecorder,
     private val autoPauseController: AutoPauseController,
@@ -105,6 +105,11 @@ class DashboardViewModel @Inject constructor(
                         currentSpeedKmh = snapshot.speedKmh ?: 0.0,
                         gradientPercent = snapshot.gradientPercent ?: 0.0
                     )
+                }
+
+                // Update power estimator with current altitude for air density calculation
+                snapshot.altitudeM?.let { altitude ->
+                    powerEstimator.updateAltitude(altitude)
                 }
 
                 // Feed speed to auto-pause controller when recording

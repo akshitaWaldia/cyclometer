@@ -122,7 +122,10 @@ fi
 # Collect all arguments for the java command, stracks://issues.gradle.org/browse/GRADLE-2359
 # This is normally unused
 # shellcheck disable=SC2034
-GRADLE_OPTS="${GRADLE_OPTS} \"-Xdock:name=$APP_BASE_NAME\" \"-Xdock:icon=$APP_HOME/media/gradle.icns\""
+# Only set Xdock options on macOS
+if [ "$(uname)" = "Darwin" ]; then
+    GRADLE_OPTS="${GRADLE_OPTS} \"-Xdock:name=$APP_BASE_NAME\" \"-Xdock:icon=$APP_HOME/media/gradle.icns\""
+fi
 
 # For Cygwin or MSYS, switch paths to Windows format before running java
 if "$cygwin" || "$msys" ; then

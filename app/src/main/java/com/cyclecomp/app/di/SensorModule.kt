@@ -17,7 +17,7 @@ import com.cyclecomp.app.domain.ride.LapManagerImpl
 import com.cyclecomp.app.domain.ride.RideRecorder
 import com.cyclecomp.app.domain.ride.RideRecorderImpl
 import com.cyclecomp.app.domain.sensor.PowerEstimator
-import com.cyclecomp.app.domain.sensor.PowerEstimatorImpl
+import com.cyclecomp.app.domain.sensor.PowerEstimatorV2
 import com.cyclecomp.app.domain.sensor.SensorHub
 import com.cyclecomp.app.domain.sensor.SensorHubImpl
 import dagger.Module
@@ -71,8 +71,14 @@ object SensorModule {
 
     @Provides
     @Singleton
-    fun providePowerEstimator(): PowerEstimator {
-        return PowerEstimatorImpl()
+    fun providePowerEstimatorV2(): PowerEstimatorV2 {
+        return PowerEstimatorV2()
+    }
+
+    @Provides
+    @Singleton
+    fun providePowerEstimator(powerEstimatorV2: PowerEstimatorV2): PowerEstimator {
+        return powerEstimatorV2
     }
 
     @Provides
