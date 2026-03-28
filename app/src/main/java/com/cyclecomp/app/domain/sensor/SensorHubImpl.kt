@@ -63,6 +63,7 @@ class SensorHubImpl @Inject constructor(
     private var previousCscMeasurement: BleCharacteristicParsers.CscMeasurement? = null
 
     private var collectJobs = mutableListOf<Job>()
+    private val cscJobs = mutableMapOf<String, Job>()
 
     override fun start() {
         // Start sub-providers
@@ -120,7 +121,8 @@ class SensorHubImpl @Inject constructor(
     }
 
     private fun collectCscFromDevice(address: String) {
-        collectJobs += scope.launch {
+        cscJobs[address]?.cancel()
+        cscJobs[address] = scope.launch {
             bleManager.getCharacteristicFlow(address, BleManagerImpl.CSC_MEASUREMENT_UUID)
                 .collectLatest { data ->
                     processCscData(data)
@@ -145,6 +147,8 @@ class SensorHubImpl @Inject constructor(
     override fun stop() {
         collectJobs.forEach { it.cancel() }
         collectJobs.clear()
+        cscJobs.values.forEach { it.cancel() }
+        cscJobs.clear()
         wearableHrReceiver.stop()
         healthConnectHrReader.stop()
         gpsProvider.stop()
