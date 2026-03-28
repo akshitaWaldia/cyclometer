@@ -97,17 +97,6 @@ class SensorHubImpl @Inject constructor(
             }
         }
 
-        // Collect cadence from BLE CSC characteristic
-        collectJobs += scope.launch {
-            bleManager.getCharacteristicFlow(
-                deviceAddress = "", // Will be resolved from connected devices
-                characteristicUuid = BleManagerImpl.CSC_MEASUREMENT_UUID
-            ).collectLatest { data ->
-                processCscData(data)
-                emitSnapshot()
-            }
-        }
-
         // Also collect from all connected CSC devices
         collectJobs += scope.launch {
             bleManager.connectionStates.collectLatest { states ->
