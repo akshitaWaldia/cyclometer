@@ -12,8 +12,6 @@ import com.cyclecomp.app.domain.model.HeartRateZone
 import com.cyclecomp.app.domain.model.SensorSnapshot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -67,19 +65,7 @@ class SensorHubImpl @Inject constructor(
     private var collectJobs = mutableListOf<Job>()
     private val cscJobs = mutableMapOf<String, Job>()
 
-    private val snapshotTrigger = MutableSharedFlow<Unit>(
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-
     override fun start() {
-        collectJobs += scope.launch {
-            snapshotTrigger.collect {
-                emitSnapshotInternal()
-                kotlinx.coroutines.delay(100) // Throttle to max 10Hz to prevent cascading UI updates
-            }
-        }
-        
         // Start sub-providers
         // Primary HR source: Wearable Data Layer from Galaxy Watch
         wearableHrReceiver.start()
@@ -171,10 +157,6 @@ class SensorHubImpl @Inject constructor(
     }
 
     private fun emitSnapshot() {
-        snapshotTrigger.tryEmit(Unit)
-    }
-
-    private fun emitSnapshotInternal() {
         val now = System.currentTimeMillis()
 
         // Staleness: if HR hasn't updated within timeout, report null

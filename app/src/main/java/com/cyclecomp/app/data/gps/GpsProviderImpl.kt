@@ -4,7 +4,6 @@ package com.cyclecomp.app.data.gps
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.HandlerThread
 import android.os.Looper
 import android.util.Log
 import com.cyclecomp.app.domain.model.GpsReading
@@ -67,7 +66,6 @@ class GpsProviderImpl @Inject constructor(
     private val trackPoints = mutableListOf<Pair<Double, Long>>()
 
     private var locationCallback: LocationCallback? = null
-    private var gpsHandlerThread: HandlerThread? = null
 
     override fun start() {
         if (locationCallback != null) return
@@ -94,12 +92,8 @@ class GpsProviderImpl @Inject constructor(
 
         locationCallback = callback
 
-        val handlerThread = HandlerThread("GpsThread")
-        handlerThread.start()
-        gpsHandlerThread = handlerThread
-
         try {
-            fusedClient.requestLocationUpdates(request, callback, handlerThread.looper)
+            fusedClient.requestLocationUpdates(request, callback, Looper.getMainLooper())
             Log.d(TAG, "GPS updates started")
         } catch (e: SecurityException) {
             Log.e(TAG, "Location permission not granted", e)
@@ -112,8 +106,6 @@ class GpsProviderImpl @Inject constructor(
             locationCallback = null
             Log.d(TAG, "GPS updates stopped")
         }
-        gpsHandlerThread?.quit()
-        gpsHandlerThread = null
     }
 
     override fun reset() {
