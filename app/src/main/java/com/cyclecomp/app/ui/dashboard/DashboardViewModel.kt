@@ -38,6 +38,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -127,78 +129,74 @@ class DashboardViewModel @Inject constructor(
             }
         }
 
-        // Collect heart rate zone
+        // Combine related flows to avoid cascading UI updates
         viewModelScope.launch {
-            sensorHub.heartRateZone.collect { zone ->
-                _uiState.update { it.copy(heartRateZone = zone) }
-            }
-        }
-
-        // Collect cumulative distance
-        viewModelScope.launch {
-            gpsProvider.cumulativeDistanceKm.collect { dist ->
-                _uiState.update { it.copy(distanceKm = dist) }
-            }
-        }
-
-        // Collect elevation gain
-        viewModelScope.launch {
-            gpsProvider.cumulativeElevationGainM.collect { elev ->
-                _uiState.update { it.copy(elevationGainM = elev) }
-            }
-        }
-
-        // Collect avg speed over last km
-        viewModelScope.launch {
-            gpsProvider.avgSpeedLastKmKmh.collect { avg ->
-                _uiState.update { it.copy(avgSpeedLastKmKmh = avg) }
-            }
+            kotlinx.coroutines.flow.combine(
+                gpsProvider.cumulativeDistanceKm,
+                gpsProvider.cumulativeElevationGainM,
+                gpsProvider.avgSpeedLastKmKmh,
+                sensorHub.heartRateZone
+            ) { dist, elev, avg, zone ->
+                _uiState.update {
+                    it.copy(
+                        distanceKm = dist,
+                        elevationGainM = elev,
+                        avgSpeedLastKmKmh = avg,
+                        heartRateZone = zone
+                    )
+                }
+            }.collect()
         }
     }
 
     private fun collectRideState() {
         viewModelScope.launch {
-            rideRecorder.rideState.collect { state ->
-                _uiState.update { it.copy(rideState = state) }
-            }
-        }
-
-        viewModelScope.launch {
-            rideRecorder.elapsedTimeMs.collect { ms ->
-                val formatted = ms.milliseconds.toHhMmSs()
-                _uiState.update { it.copy(elapsedTime = formatted, elapsedTimeMs = ms) }
-            }
+            combine(
+                rideRecorder.rideState,
+                rideRecorder.elapsedTimeMs
+            ) { state, ms ->
+                _uiState.update { 
+                    it.copy(
+                        rideState = state,
+                        elapsedTime = ms.milliseconds.toHhMmSs(),
+                        elapsedTimeMs = ms
+                    )
+                }
+            }.collect()
         }
     }
 
     private fun collectPowerData() {
         viewModelScope.launch {
-            powerEstimator.currentPowerW.collect { power ->
-                _uiState.update { it.copy(powerW = power.toInt()) }
-            }
-        }
-        viewModelScope.launch {
-            powerEstimator.averagePowerW.collect { avg ->
-                _uiState.update { it.copy(avgPowerW = avg.toInt()) }
-            }
-        }
-        viewModelScope.launch {
-            powerEstimator.normalizedPowerW.collect { np ->
-                _uiState.update { it.copy(normalizedPowerW = np.toInt()) }
-            }
+            combine(
+                powerEstimator.currentPowerW,
+                powerEstimator.averagePowerW,
+                powerEstimator.normalizedPowerW
+            ) { current, avg, np ->
+                _uiState.update { 
+                    it.copy(
+                        powerW = current.toInt(),
+                        avgPowerW = avg.toInt(),
+                        normalizedPowerW = np.toInt()
+                    )
+                }
+            }.collect()
         }
     }
 
     private fun collectCalorieAndTssData() {
         viewModelScope.launch {
-            calorieAndTssCalculator.caloriesBurned.collect { cal ->
-                _uiState.update { it.copy(caloriesKcal = cal.toInt()) }
-            }
-        }
-        viewModelScope.launch {
-            calorieAndTssCalculator.tss.collect { tss ->
-                _uiState.update { it.copy(tss = tss.toInt()) }
-            }
+            combine(
+                calorieAndTssCalculator.caloriesBurned,
+                calorieAndTssCalculator.tss
+            ) { cal, tss ->
+                _uiState.update { 
+                    it.copy(
+                        caloriesKcal = cal.toInt(),
+                        tss = tss.toInt()
+                    )
+                }
+            }.collect()
         }
     }
 
