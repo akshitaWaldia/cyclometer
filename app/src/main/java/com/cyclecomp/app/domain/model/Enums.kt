@@ -17,7 +17,7 @@ enum class HeartRateZone(val range: IntRange) {
 
     companion object {
         fun fromBpm(bpm: Int): HeartRateZone {
-            return entries.first { bpm in it.range }
+            return entries.firstOrNull { bpm in it.range } ?: if (bpm < 0) ZONE1 else ZONE5
         }
     }
 }
