@@ -42,6 +42,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.IOException
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -515,8 +516,16 @@ class DashboardViewModel @Inject constructor(
     // --- Export helpers ---
 
     private fun exportRideFiles(ride: RideData): Triple<String, String, ByteArray> {
-        val exportDir = File(appContext.getExternalFilesDir(null), "rides")
-        if (!exportDir.exists()) exportDir.mkdirs()
+        val externalDir = appContext.getExternalFilesDir(null)
+        val exportDir = if (externalDir != null) {
+            File(externalDir, "rides")
+        } else {
+            // Fallback to internal storage
+            File(appContext.filesDir, "rides")
+        }
+        if (!exportDir.exists() && !exportDir.mkdirs()) {
+            throw IOException("Failed to create export directory: ${exportDir.absolutePath}")
+        }
 
         val timestamp = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")
             .withZone(ZoneOffset.UTC)
