@@ -130,7 +130,7 @@ class PowerEstimatorImpl @Inject constructor() : PowerEstimator {
         }
 
         // Trim old samples to avoid unbounded memory growth
-        if (rollingPowerSamples.size > NP_WINDOW_SEC * 2) {
+        while (rollingPowerSamples.size > NP_WINDOW_SEC * 2) {
             rollingPowerSamples.removeAt(0)
         }
     }
